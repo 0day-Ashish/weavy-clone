@@ -7,8 +7,11 @@ export const generateContentTask = task({
   id: "generate-content",
   run: async (payload: { prompt: string; model: string; systemPrompt?: string; imageUrls?: string[] }, { ctx }) => {
     
+    // Fallback to 'gemini-2.5-flash' if model is missing or invalid
+    const modelName = payload.model || "gemini-2.5-flash";
+
     const model = genAI.getGenerativeModel({ 
-      model: payload.model,
+      model: modelName,
       systemInstruction: payload.systemPrompt
     });
 

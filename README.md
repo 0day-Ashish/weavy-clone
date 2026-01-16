@@ -2,7 +2,7 @@
 
 A powerful, node-based workflow builder for AI-powered content generation. Chain together LLMs, image processing, and video analysis tools on an infinite canvas.
 
-![Weavy Clone Screenshot](/public/og-image.png)
+![Weavy Clone Screenshot](./public/image.png)
 
 ## ✨ Features
 

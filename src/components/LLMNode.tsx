@@ -69,7 +69,7 @@ export function LLMNode({ id, data }: { id: string; data: any }) {
     // trigger workflow
     const result = await triggerLLMGeneration(
       userMessage || "", 
-      data.model || 'gemini-2.5-pro',
+      data.model || 'gemini-2.5-flash',
       systemPrompt as string,
       imageUrls as string[] // sending an array now
     );
@@ -170,14 +170,15 @@ export function LLMNode({ id, data }: { id: string; data: any }) {
         {/* controls */}
         <Select 
           onValueChange={(val) => updateNodeData(id, { model: val })} 
-          defaultValue={data.model || "gemini-2.5-pro"}
+          defaultValue={data.model || "gemini-2.5-flash"}
         >
           <SelectTrigger className="h-8 text-xs bg-black/20 border-white/10 text-white">
             <SelectValue placeholder="Select Model" />
           </SelectTrigger>
           <SelectContent className="bg-[#1a1a1a] border-white/10 text-white">
-            <SelectItem value="gemini-2.5-pro">Gemini 2.5 Pro (Fast)</SelectItem>
-            <SelectItem value="gemini-3-pro-preview">Gemini 3 Pro (Smart)</SelectItem>
+            <SelectItem value="gemini-2.5-flash">Gemini 2.5 Flash (Fastest)</SelectItem>
+            <SelectItem value="gemini-2.5-pro">Gemini 2.5 Pro (Best Quality)</SelectItem>
+            <SelectItem value="gemini-2.0-flash">Gemini 2.0 Flash (New)</SelectItem>
           </SelectContent>
         </Select>
 

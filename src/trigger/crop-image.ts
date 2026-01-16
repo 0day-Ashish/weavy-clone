@@ -2,7 +2,7 @@ import { task, logger } from "@trigger.dev/sdk/v3";
 import sharp from "sharp";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-// Initialize S3 Client
+// initialize S3 Client
 const s3 = new S3Client({
   region: process.env.S3_REGION!,
   endpoint: process.env.S3_ENDPOINT!, 
@@ -10,6 +10,7 @@ const s3 = new S3Client({
     accessKeyId: process.env.S3_ACCESS_KEY_ID!,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
   },
+  forcePathStyle: true,
 });
 
 export const cropImageTask = task({
@@ -49,8 +50,9 @@ export const cropImageTask = task({
 
       let publicUrl = "";
       if (process.env.S3_ENDPOINT?.includes("supabase")) {
-         const baseUrl = process.env.S3_ENDPOINT.replace("/s3", "/object/public");
-         publicUrl = `${baseUrl}/${process.env.S3_BUCKET_NAME}/${fileName}`;
+         const endpoint = process.env.S3_ENDPOINT;
+         const baseUrl = endpoint.replace(/\/s3\/?$/, ""); 
+         publicUrl = `${baseUrl}/object/public/${process.env.S3_BUCKET_NAME}/${fileName}`;
       } else {
          publicUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.S3_REGION}.amazonaws.com/${fileName}`;
       }
