@@ -143,7 +143,7 @@ export default function FlowEditor() {
   const [pendingImportData, setPendingImportData] = useState<any>(null);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [activeSidebar, setActiveSidebar] = useState<'nodes' | 'history' | 'templates' | 'search' | 'file' | null>('nodes');
+  const [activeSidebar, setActiveSidebar] = useState<'nodes' | 'history' | 'templates' | 'search' | 'file' | null>(null);
   const [isLoading, setIsLoading] = useState(false); 
   
   const [workflowName, setWorkflowName] = useState("My Workflow");
@@ -546,15 +546,35 @@ export default function FlowEditor() {
                 <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-[#0a0a0a] border-r border-white/10 text-white w-64 p-4">
-              <div className="mb-8 mt-2">
-                <SheetTitle className="text-xl font-bold text-white-400">Weavy Clone</SheetTitle>
+            <SheetContent side="left" className="bg-[#0a0a0a] border-r border-white/10 text-white w-64 p-4 flex flex-col">
+              <div className="mb-4 mt-2">
+                <SheetTitle className="text-xl font-bold text-purple-400">Weavy Clone</SheetTitle>
                 <p className="text-xs text-slate-500">Workflow Builder</p>
               </div>
-              <div className="space-y-4">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Quick Access</p>
-                <QuickAccessGrid />
-              </div>
+              
+              <ScrollArea className="flex-1 -mx-4 px-4">
+                <div className="space-y-6">
+                  {/* Quick Access Section */}
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Add Nodes</p>
+                    <QuickAccessGrid />
+                  </div>
+
+                  {/* Menu Options */}
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Menu</p>
+                    <Button variant="ghost" className="w-full justify-start gap-3 text-slate-300 hover:text-white hover:bg-white/10" onClick={() => setActiveSidebar('history')}>
+                      <Clock className="w-4 h-4" /> History
+                    </Button>
+                    <Button variant="ghost" className="w-full justify-start gap-3 text-slate-300 hover:text-white hover:bg-white/10" onClick={() => setActiveSidebar('templates')}>
+                      <LayoutTemplate className="w-4 h-4" /> Templates
+                    </Button>
+                    <Button variant="ghost" className="w-full justify-start gap-3 text-slate-300 hover:text-white hover:bg-white/10" onClick={() => setActiveSidebar('file')}>
+                      <FileJson className="w-4 h-4" /> My Files
+                    </Button>
+                  </div>
+                </div>
+              </ScrollArea>
             </SheetContent>
           </Sheet>
 
@@ -562,7 +582,7 @@ export default function FlowEditor() {
             <Input 
               value={workflowName} 
               onChange={(e) => setWorkflowName(e.target.value)} 
-              className="h-8 w-64 bg-transparent border-transparent hover:border-white/20 focus:bg-black/50 focus:border-purple-500/50 text-lg font-bold text-white px-2 transition-all focus-visible:ring-0"
+              className="h-8 w-32 md:w-64 bg-transparent border-transparent hover:border-white/20 focus:bg-black/50 focus:border-purple-500/50 text-sm md:text-lg font-bold text-white px-2 transition-all focus-visible:ring-0"
             />
           </div>
         </div>
@@ -620,9 +640,9 @@ export default function FlowEditor() {
            </div>
         </nav>
 
-        {/* expandable panel (left drawer) */}
+        {/* expandable panel (left drawer) - Mobile & Desktop */}
         {activeSidebar && (
-           <aside className="hidden md:flex w-80 bg-[#0a0a0a] border-r border-white/10 flex-col z-20 animate-in slide-in-from-left-5 duration-200 absolute left-16 h-full shadow-2xl">
+           <aside className="fixed inset-0 z-50 md:static md:z-20 md:w-80 bg-[#0a0a0a] border-r border-white/10 flex flex-col animate-in slide-in-from-left-5 duration-200 md:absolute md:left-16 md:h-full shadow-2xl">
               <div className="p-5 border-b border-white/10 flex justify-between items-center bg-[#0a0a0a]">
                  <h2 className="font-semibold text-white text-lg capitalize tracking-tight">
                    {activeSidebar === 'nodes' ? 'Quick Access' : activeSidebar}
