@@ -1,18 +1,16 @@
 import { task, logger } from "@trigger.dev/sdk/v3";
 import ffmpeg from "fluent-ffmpeg";
-import ffmpegInstaller from "@ffmpeg-installer/ffmpeg";
 import fs from "fs";
 import path from "path";
 import os from "os";
-
-// tell fluent-ffmpeg where the binary is
-ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 export const extractFrameTask = task({
   id: "extract-frame",
   run: async (payload: { videoUrl: string; timestamp: string }) => {
     
     await logger.info("Extraction started", { payload });
+    
+    ffmpeg.setFfmpegPath("ffmpeg");
 
     const tempDir = os.tmpdir();
     const outputPath = path.join(tempDir, `frame-${Date.now()}.png`);

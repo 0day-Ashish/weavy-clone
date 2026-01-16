@@ -12,6 +12,7 @@ A powerful, node-based workflow builder for AI-powered content generation. Chain
   - **Image Analysis**: Feed images directly into LLM prompts.
   - **Smart Cropping**: Intelligent image resizing with `sharp`.
   - **Video Extraction**: extract specific frames from video URLs using `ffmpeg`.
+  - **File Uploads**: Resumable file uploads handled by Transloadit.
 - **🔗 Smart Wiring**: Connect nodes logically (e.g., Image -> Crop -> LLM).
 - **💾 Persistence**:
   - **Save/Load**: Store workflows in a PostgreSQL database via Prisma.
@@ -28,6 +29,7 @@ A powerful, node-based workflow builder for AI-powered content generation. Chain
 - **State Management**: Zustand + Zundo (Undo/Redo)
 - **Canvas Engine**: React Flow (xyflow)
 - **Backend**: Trigger.dev (Serverless Tasks)
+- **File Uploads**: Transloadit (Uppy)
 - **Database**: PostgreSQL + Prisma ORM
 - **Auth**: Clerk
 - **Validation**: Zod
@@ -40,6 +42,7 @@ A powerful, node-based workflow builder for AI-powered content generation. Chain
 - PostgreSQL Database (e.g., Supabase, Neon)
 - Clerk Account
 - Trigger.dev Account
+- Transloadit Account
 - Google Gemini API Key
 
 ### Installation
@@ -74,6 +77,10 @@ A powerful, node-based workflow builder for AI-powered content generation. Chain
 
     # Trigger.dev
     TRIGGER_SECRET_KEY="tr_..."
+
+    # Transloadit
+    NEXT_PUBLIC_TRANSLOADIT_KEY="your_transloadit_key"
+    NEXT_PUBLIC_TRANSLOADIT_TEMPLATE_ID="your_template_id"
     ```
 
 4.  **Initialize Database:**
