@@ -123,3 +123,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media (max-width: 768px) {
+  .react-flow__attribution {
+    display: none;
+  }
+}

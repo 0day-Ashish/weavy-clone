@@ -11,26 +11,51 @@ generator client {
 // auth
 model User {
   id        String   @id @default(cuid())
-  clerkId   String   @unique 
+  clerkId   String   @unique
   email     String
-  workflows Workflow[] 
+  workflows Workflow[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-// core workflow model
 model Workflow {
   id          String   @id @default(cuid())
   name        String
   description String?
-  
-  // store the entire React Flow state (nodes and edges)
   nodes       Json     
   edges       Json
-  
+  history     Json?    // <--- store logs here     
   userId      String
   user        User     @relation(fields: [userId], references: [id])
+  runs        WorkflowRun[] 
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// workflow history
+model WorkflowRun {
+  id          String   @id @default(cuid())
+  workflowId  String
+  workflow    Workflow @relation(fields: [workflowId], references: [id])
+  status      String   
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  duration    Int?    
+  
+// node-level history
+  steps       NodeExecution[] 
+}
+
+model NodeExecution {
+  id            String      @id @default(cuid())
+  runId         String
+  run           WorkflowRun @relation(fields: [runId], references: [id])
+  nodeId        String      
+  nodeType      String      
+  status        String      
+  inputs        Json?       
+  outputs       Json?       
+  duration      Int?        
+  errorMessage  String?     
 }
